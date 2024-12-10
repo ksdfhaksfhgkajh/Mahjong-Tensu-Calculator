@@ -11,14 +11,14 @@
 //
 //}
 
-Mahjong::Mahjong(std::string str = "")
-	:_mahjong_string(str)
+Mahjong::Mahjong(std::string&& str)
+	:_mahjong_string(std::move(str))
 {
-	_String2Mahjong();
+    _stringToMahjong();
 }
 
 //把输入手牌转换成可用数据
-void Mahjong::_String2Mahjong()
+void Mahjong::_stringToMahjong()
 {
 	MahjongType mahjong_type;
 	TehaiType tehai_type = Tehai;
@@ -59,10 +59,10 @@ void Mahjong::_String2Mahjong()
 			switch (tehai_type)
 			{
 			case Tehai:
-				_tehai.push_back(std::make_pair(static_cast<int>(*it - '0'), mahjong_type));
+				_tehai.emplace_back(static_cast<int>(*it - '0'), mahjong_type);
 				break;
 			case Fuuro:
-				sub_fuuro.push_back(std::make_pair(static_cast<int>(*it - '0'), mahjong_type));
+				sub_fuuro.emplace_back(static_cast<int>(*it - '0'), mahjong_type);
 				break;
 			case Agari:
 				_agarihai = std::make_pair(static_cast<int>(*it - '0'), mahjong_type);
@@ -119,7 +119,7 @@ std::ostream& operator<< (std::ostream& o, const Mahjong& my_tehai)
 	o << std::endl << "和了牌为：" << std::endl;
 	typecout(my_tehai._agarihai);
 	o << std::endl << "副露为：" << std::endl;
-	if (my_tehai._fuuro.size() == 0)
+	if (my_tehai._fuuro.empty())
 		o << "空" ;
 	else
 	{

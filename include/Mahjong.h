@@ -6,27 +6,31 @@
 #include <string>
 #include <bitset>
 
-enum MahjongType {
+enum MahjongType
+{
 	Man,
 	Pin,
 	Soo,
 	Ji
 };
 
-enum TehaiType {
+enum TehaiType
+{
 	Tehai,
 	Fuuro,
 	Agari
 };
 
-const std::unordered_map<char, MahjongType> typemap = {
+const std::unordered_map<char, MahjongType> typemap =
+{
 		{'m', Man},
 		{'p', Pin},
 		{'s', Soo},
 		{'j', Ji},
 };
 
-const std::unordered_map<int, std::string> jihai_map = {
+const std::unordered_map<int, std::string> jihai_map =
+{
 		{1, "–|"},
 		{2, "ÄÏ"},
 		{3, "Î÷"},
@@ -36,7 +40,8 @@ const std::unordered_map<int, std::string> jihai_map = {
 		{7, "ÖÐ"}
 };
 
-enum FanType {
+enum FanType
+{
 	Riichi,
 	Tanyao,
 	Haku,
@@ -90,21 +95,22 @@ public:
 	using MahjongString = std::vector<MahjongData>;
 
 private:
-	std::string _mahjong_string;
-	std::bitset<42> _yakulist;
-	int _jifuu, _bafuu;
-	bool _is_tsumo;
+	std::string _mahjong_string{};
+	std::bitset<42> _yakulist{};
+	int _jifuu{};
+    int _bafuu{};
+	bool _is_tsumo{};
 
 	MahjongData _agarihai;
 	MahjongString _tehai;
 	std::vector<MahjongString> _fuuro;
 
-	void _String2Mahjong();
+	void _stringToMahjong();
 
 public:
-	Mahjong(std::string);
+	explicit Mahjong(std::string&& str);
 
-	std::pair<bool, int> YakuDeter() const;
+	std::pair<bool, int> yakuDeter() const;
 
 	//int FuCalcu() const;
 
